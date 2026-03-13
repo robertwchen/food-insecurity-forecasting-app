@@ -103,4 +103,25 @@ Run the backend locally:
 uvicorn backend.app.main:app --reload
 ```
 
+Test the health endpoint:
+
+```powershell
+Invoke-RestMethod -Uri "http://127.0.0.1:8000/health" | ConvertTo-Json -Depth 4
+```
+
+Test the predict endpoint:
+
+```powershell
+$body = @{
+  month = 6
+  population = 100000
+  snap_participants = 12000
+  unemployed_people = 4500
+  people_below_poverty = 15000
+  previous_month_food_lbs = 70000
+} | ConvertTo-Json
+
+Invoke-RestMethod -Uri "http://127.0.0.1:8000/predict" -Method Post -ContentType "application/json" -Body $body | ConvertTo-Json -Depth 6
+```
+
 This layer should not retrain models or read the raw training CSVs.
