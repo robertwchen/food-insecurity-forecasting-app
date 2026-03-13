@@ -2,6 +2,7 @@ from pathlib import Path
 
 TRAINING_DIR = Path(__file__).resolve().parents[2]
 RAW_DATA_DIR = TRAINING_DIR / "data" / "raw"
+ARTIFACTS_DIR = TRAINING_DIR / "artifacts"
 
 DATASET_FILES = {
     "food_bank": "va_food_banks.csv",
@@ -21,3 +22,8 @@ MODEL_FEATURES = [
 
 TARGET_COLUMN = "food_distributed_pounds"
 DEFAULT_POPULATION_YEAR = 2024
+MODEL_ARTIFACT_PATH = ARTIFACTS_DIR / "model.joblib"
+METRICS_PATH = ARTIFACTS_DIR / "metrics.json"
+FEATURE_COLUMNS_PATH = ARTIFACTS_DIR / "feature_columns.json"
+RANDOM_FOREST_N_ESTIMATORS = 100
+RANDOM_FOREST_RANDOM_STATE = 42

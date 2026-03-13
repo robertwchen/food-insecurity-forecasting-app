@@ -1,0 +1,8 @@
+{
+  "r2": 0.8821066672220856,
+  "rmse": 2622.9183353315875,
+  "row_count": 12,
+  "n_estimators": 100,
+  "random_state": 42,
+  "evaluation_scope": "training_data"
+}

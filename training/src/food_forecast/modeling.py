@@ -13,6 +13,13 @@ class ModelEvaluation:
     rmse: float
     row_count: int
 
+    def to_dict(self) -> dict[str, float | int]:
+        return {
+            "r2": self.r2,
+            "rmse": self.rmse,
+            "row_count": self.row_count,
+        }
+
 
 def build_features_and_target(
     model_df: pd.DataFrame,
@@ -41,8 +48,9 @@ def evaluate_model(
 ) -> ModelEvaluation:
     features, target = build_features_and_target(model_df)
     predictions = model.predict(features)
+    mse = mean_squared_error(target, predictions)
     return ModelEvaluation(
         r2=r2_score(target, predictions),
-        rmse=mean_squared_error(target, predictions, squared=False),
+        rmse=mse**0.5,
         row_count=len(model_df),
     )
