@@ -125,3 +125,45 @@ Invoke-RestMethod -Uri "http://127.0.0.1:8000/predict" -Method Post -ContentType
 ```
 
 This layer should not retrain models or read the raw training CSVs.
+
+## Render Deployment
+
+Recommended approach:
+- create the backend service through the Render web UI
+- keep the service rooted at the repo root so it can access `training/artifacts/model.joblib`
+
+### Render UI Settings
+
+Service type:
+- `Web Service`
+
+Runtime:
+- `Python 3`
+
+Build command:
+
+```text
+pip install -r backend/requirements.txt
+```
+
+Start command:
+
+```text
+uvicorn backend.app.main:app --host 0.0.0.0 --port $PORT
+```
+
+### Render Environment Variables
+
+Optional:
+
+```text
+MODEL_ARTIFACT_PATH=training/artifacts/model.joblib
+```
+
+For CORS:
+
+```text
+ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
+```
+
+Later, when the frontend is deployed, update `ALLOWED_ORIGINS` to include the deployed frontend URL.
