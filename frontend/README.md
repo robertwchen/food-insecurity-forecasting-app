@@ -7,6 +7,7 @@ This folder will contain the Next.js and TypeScript application.
 ```text
 frontend/
   .env.local.example
+  .env.production.example
   app/
     globals.css
     layout.tsx
@@ -105,5 +106,47 @@ For local development, `.env.local` should contain:
 ```text
 NEXT_PUBLIC_API_BASE_URL=http://127.0.0.1:8000
 ```
+
+For deployment, the production value should point to the deployed backend:
+
+```text
+NEXT_PUBLIC_API_BASE_URL=https://food-insecurity-forecasting-app.onrender.com
+```
+
+## Vercel Deployment
+
+Recommended approach:
+- create the frontend deployment through the Vercel web UI
+- set the project root directory to `frontend`
+
+### Vercel UI Settings
+
+Framework preset:
+- `Next.js`
+
+Root directory:
+- `frontend`
+
+Build command:
+- leave the default Vercel Next.js build command
+
+Install command:
+- leave the default Vercel install command
+
+### Vercel Environment Variable
+
+Set this in the Vercel project settings before deploying:
+
+```text
+NEXT_PUBLIC_API_BASE_URL=https://food-insecurity-forecasting-app.onrender.com
+```
+
+Important:
+- `NEXT_PUBLIC_` variables are exposed to the browser
+- Next.js inlines them at build time, so if you change the value later you need to redeploy
+
+### After Frontend Deployment
+
+Once Vercel gives you the frontend URL, go back to Render and update the backend `ALLOWED_ORIGINS` value to include that deployed frontend origin.
 
 This layer should not contain Python training code or direct model files.
