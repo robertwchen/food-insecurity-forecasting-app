@@ -2,7 +2,7 @@
 
 import { FormEvent, useState } from "react";
 
-const BACKEND_URL = "http://127.0.0.1:8000";
+const BACKEND_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 type FormValues = {
   month: string;
@@ -47,6 +47,10 @@ export default function HomePage() {
     setIsSubmitting(true);
 
     try {
+      if (!BACKEND_URL) {
+        throw new Error("Missing NEXT_PUBLIC_API_BASE_URL configuration.");
+      }
+
       const response = await fetch(`${BACKEND_URL}/predict`, {
         method: "POST",
         headers: {

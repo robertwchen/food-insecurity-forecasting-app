@@ -6,6 +6,7 @@ This folder will contain the Next.js and TypeScript application.
 
 ```text
 frontend/
+  .env.local.example
   app/
     globals.css
     layout.tsx
@@ -55,6 +56,16 @@ Outputs:
 Why separate:
 - presentation should stay separate from React logic
 
+### `.env.local`
+Inputs:
+- local frontend configuration values
+
+Outputs:
+- runtime environment values available in the browser app
+
+Why separate:
+- URLs and environment-specific settings should not be hardcoded in React code
+
 ## Local Commands
 
 Install frontend dependencies:
@@ -69,6 +80,12 @@ Run the frontend locally:
 npm run dev
 ```
 
+Create your local environment file:
+
+```powershell
+Copy-Item .env.local.example .env.local
+```
+
 Open the app:
 
 ```text
@@ -77,15 +94,16 @@ http://localhost:3000
 
 ## Current Backend Connection
 
-Right now the frontend calls:
+The frontend reads the backend base URL from:
 
 ```text
-http://127.0.0.1:8000
+NEXT_PUBLIC_API_BASE_URL
 ```
 
-directly inside `app/page.tsx`.
+For local development, `.env.local` should contain:
 
-That is fine for Phase 6 so you can clearly see the request flow.
-In the next phase, we will move that URL into an environment variable.
+```text
+NEXT_PUBLIC_API_BASE_URL=http://127.0.0.1:8000
+```
 
 This layer should not contain Python training code or direct model files.
